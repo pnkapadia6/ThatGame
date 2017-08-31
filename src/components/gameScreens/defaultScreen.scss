@@ -1,0 +1,40 @@
+.start-container {
+  margin: 2rem 0;
+}
+
+.start-container__button {
+  background-color: #eee;
+  border-radius: 50%;
+  box-shadow: 5px 5px 3px maroon;
+  color: maroon;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 10rem;
+  line-height: 10rem;
+  margin: 5rem auto;
+  text-align: center;
+  width: 10rem;
+}
+
+.start-container__button:active {
+  box-shadow: 1px 1px 1px maroon;
+}
+
+.start-container__high-score {
+  font-size: 1.6rem;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.start-container__rules {
+  text-align: center;
+}
+
+.start-container__r__label {
+  font-size: 1.4rem;
+}
+
+.start-container__r__details {
+  font-size: 1.2rem;
+}
