@@ -1,5 +1,5 @@
 import _merge from 'lodash/merge';
-import { DEFAULT_STATE } from './constants';
+import { DEFAULT_STATE } from '../constants';
 
 const getSerializesHighScore = () => {
   try {

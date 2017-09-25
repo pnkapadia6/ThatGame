@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import DefaultScreen from './gameScreens/defaultScreen';
-import GameOverScreen from './gameScreens/gameOverScreen';
-import Game from './game';
+import DefaultScreen from './GameScreens/DefaultScreen';
+import GameOverScreen from './GameScreens/GameOverScreen';
+import Game from './Game';
 import { startGame, stopGame } from '../actions';
 import './mainApp.scss';
 
 const mapStateToProps = (state) => {
-  const { highScore, highScoreCreated, score, status } = state.game,
-    { ongoing } = state.timer,
+  const { highScore, highScoreCreated, score, status } = state.game || {},
+    { ongoing } = state.timer || {},
     props = {
       highScore,
       highScoreCreated,

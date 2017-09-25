@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { startGame, answerCorrectly, answerIncorrectly } from '../../actions';
-import UserButtons from './userButtons';
-import Timer from '../timer';
+import UserButtons from './UserButtons';
+import Timer from '../Timer';
 import './game.scss';
 
 const mapStateToProps = (state) => ({

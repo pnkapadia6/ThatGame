@@ -1,5 +1,5 @@
 import { DEFAULT_STATE, GAME_STATUS } from '../constants';
-import Equation from '../equation';
+import Equation from '../helpers/equation';
 
 const game = (state = DEFAULT_STATE.game, action) => {
   let gameState;

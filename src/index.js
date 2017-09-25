@@ -4,10 +4,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import App from './components/mainApp';
+import App from './components/MainApp';
 import store from './reducers';
 
-import { loadState, saveState } from './storeState';
+import { loadState, saveState } from './localStorage';
 
 import './index.scss';
 

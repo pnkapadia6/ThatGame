@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { MAX_NUM, MIN_NUM, OPERATORS } from './constants';
+import { MAX_NUM, MIN_NUM, OPERATORS } from '../constants';
 
 const getRandomNumber = (min = MIN_NUM, max = MAX_NUM) => {
   return parseInt(Math.random() * (max - min + 1) + min, 10);
