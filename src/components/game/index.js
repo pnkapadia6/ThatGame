@@ -10,15 +10,16 @@ import './game.scss';
 const mapStateToProps = (state) => ({
   equation: state.game.equation,
   gameStatus: state.game.status,
-  highScore: state.game.highScore,
+  userHighScore: state.game.userHighScore,
   score: state.game.score
-})
+});
 
-const mergeProps = (stateProps, dispatchProps) => {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps,
     isEquationCorrect = stateProps.equation.isCorrect;
 
   return {
+    ...ownProps,
     ...stateProps,
     onStartGame: () => {
       dispatch(startGame())
@@ -70,7 +71,8 @@ class Game extends PureComponent {
     return (
       <div className="my-app__g__stats">
         <div className="my-app__gs__score"> Score - {this.props.score} </div>
-        <div className="my-app__gs__high-score"> High Score - {this.props.highScore} </div>
+        <div className="my-app__gs__high-score"> Your High Score - {this.props.userHighScore} </div>
+        <div className="my-app__gs__highest-score"> Highest Score - {this.props.highestScore} </div>
       </div>
     );
   }

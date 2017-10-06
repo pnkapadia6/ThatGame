@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import './defaultScreen.scss';
 
-const DefaultScreen = ({ highScore, onStartGame }) => {
-  const highScoreHtml = highScore ? (
+const DefaultScreen = ({ userHighScore = 0, highestScore = 0, onStartGame }) => {
+  const highScoreHtml = (
     <div className="start-container__high-score">
-      High Score: {highScore}
+      <p>Your High Score: {userHighScore}</p>
+      <p>Highest Score: {highestScore}</p>
     </div>
-  ) : null;
+  );
 
   return (
     <div className="start-container">
@@ -25,7 +26,7 @@ const DefaultScreen = ({ highScore, onStartGame }) => {
 };
 
 DefaultScreen.propTypes = {
-  highScore: PropTypes.number.isRequired,
+  userHighScore: PropTypes.number.isRequired,
   onStartGame: PropTypes.func.isRequired
 };
 

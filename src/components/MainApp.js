@@ -1,20 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { firebase, helpers } from 'react-redux-firebase'
 
 import DefaultScreen from './GameScreens/DefaultScreen';
 import GameOverScreen from './GameScreens/GameOverScreen';
 import Game from './Game';
-import { startGame, stopGame } from '../actions';
+import { startGame } from '../actions';
 import './mainApp.scss';
 
 const mapStateToProps = (state) => {
-  const { highScore, highScoreCreated, score, status } = state.game || {},
-    { ongoing } = state.timer || {},
-    props = {
-      highScore,
-      highScoreCreated,
-      score
-    };
+  const { firebase, game = {}, timer = {} } = state;
+  const { userHighScore, highScoreCreated, score, status } = game;
+  const { ongoing } = timer;
+  const props = {
+    userHighScore,
+    highScoreCreated,
+    score,
+    highestScore: helpers.dataToJS(firebase, 'highestScore')
+  };
 
   if (status === 'default') {
     props.gameState = 'DEFAULT';
@@ -40,9 +43,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setGameAsOver: () => {
-    dispatch(stopGame());
-  },
   onStartGame: () => {
     setTimeout(() => {
       dispatch(startGame())
@@ -53,15 +53,17 @@ const mapDispatchToProps = (dispatch) => ({
 const renderGameTitle = <div className="my-app__title">That Game!</div>;
 
 const MainApp = (props) => {
-  const { gameState, ...otherProps } = props;
+  const { gameState } = props;
+  console.log('---', props.highestScore, props.userHighScore);
+
   let renderGameComponent = <GameOverScreen {...props} />;
 
   if (gameState === 'DEFAULT') {
-    renderGameComponent = <DefaultScreen {...otherProps} />;
+    renderGameComponent = <DefaultScreen {...props} />;
   }
 
   if (gameState === 'ONGOING') {
-    renderGameComponent = <Game />;
+    renderGameComponent = <Game {...props} />;
   }
 
   return (
@@ -72,7 +74,11 @@ const MainApp = (props) => {
   )
 };
 
+const withFirebaseWrapper = firebase([
+  '/highestScore'
+])(MainApp);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainApp);
+)(withFirebaseWrapper);

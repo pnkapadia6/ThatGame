@@ -1,17 +1,13 @@
 import _get from 'lodash/get';
 
-export const decrementTimer = () => {
-  return {
-    type: 'DECREMENT_TIMER'
-  }
-};
+export const decrementTimer = () => ({
+  type: 'DECREMENT_TIMER'
+});
 
-export const resetTimer = (timerId) => {
-  return {
-    type: 'RESET_TIMER',
-    timerId
-  }
-};
+export const resetTimer = (timerId) => ({
+  type: 'RESET_TIMER',
+  timerId
+});
 
 export const startTimer = () => {
   return (dispatch, getState) => {
@@ -26,31 +22,27 @@ export const startTimer = () => {
   }
 };
 
-export const startGame = () => {
-  return (dispatch) => {
-    dispatch(startTimer());
-    dispatch({ type: 'START_GAME' });
-  }
+export const startGame = () => (dispatch) => {
+  dispatch(startTimer());
+  dispatch({ type: 'START_GAME' });
 };
 
-export const stopGame = (state) => {
-  const oldTimer = _get(state, 'timer.timerId');
+export const stopGame = () => (dispatch, getState, getFirebase) => {
+  const firebase = getFirebase();
+  const oldTimer = _get(getState(), 'timer.timerId');
   oldTimer && clearInterval(oldTimer);
+  console.log('--', firebase, getState());
   return {
     type: 'STOP_GAME'
   }
 };
 
-export const answerCorrectly = () => {
-  return (dispatch) => {
-    dispatch(startTimer());
-    dispatch({ type: 'USER_ANSWER_CORRECT' });
-  }
+export const answerCorrectly = () => (dispatch) => {
+  dispatch(startTimer());
+  dispatch({ type: 'USER_ANSWER_CORRECT' });
 };
 
-export const answerIncorrectly = () => {
-  return (dispatch, getState) => {
-    dispatch(stopGame(getState()));
-    dispatch({ type: 'USER_ANSWER_INCORRECT' });
-  }
+export const answerIncorrectly = () => (dispatch) => {
+  dispatch(stopGame());
+  dispatch({ type: 'USER_ANSWER_INCORRECT' });
 };

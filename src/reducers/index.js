@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
+
+import firebase from './firebase';
 import game from './game';
 import timer from './timer';
 
-const mainApp = combineReducers({ 
+const rootReducer = combineReducers({
+	firebase,
 	game,
 	timer
 });
 
-export default mainApp;
+export default rootReducer;

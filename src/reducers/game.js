@@ -14,6 +14,7 @@ const game = (state = DEFAULT_STATE.game, action) => {
       return gameState;
 
     case 'STOP_GAME':
+    case 'USER_ANSWER_INCORRECT':
       gameState = Object.assign({}, state);
       gameState.status = GAME_STATUS.OVER;
       return gameState;
@@ -21,16 +22,11 @@ const game = (state = DEFAULT_STATE.game, action) => {
     case 'USER_ANSWER_CORRECT':
       gameState = Object.assign({}, state);
       gameState.score++;
-      if (gameState.score > gameState.highScore) {
-        gameState.highScore = gameState.score;
+      if (gameState.score > gameState.userHighScore) {
+        gameState.userHighScore = gameState.score;
         gameState.highScoreCreated = true;
       }
       gameState.equation = new Equation();
-      return gameState;
-
-    case 'USER_ANSWER_INCORRECT':
-      gameState = Object.assign({}, state);
-      gameState.status = GAME_STATUS.OVER;
       return gameState;
 
     default:

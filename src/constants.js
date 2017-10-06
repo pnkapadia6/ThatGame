@@ -10,7 +10,7 @@ export const GAME_STATUS = {
 
 export const DEFAULT_STATE = {
   game: {
-    highScore: 0,
+    userHighScore: 0,
     highScoreCreated: false,
     score: 0,
     status: GAME_STATUS.DEFAULT

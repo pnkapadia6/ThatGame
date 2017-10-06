@@ -3,7 +3,7 @@ import { DEFAULT_STATE } from '../constants';
 
 const getSerializesHighScore = () => {
   try {
-    const serializedHighScore = localStorage.getItem('highScore');
+    const serializedHighScore = localStorage.getItem('userHighScore');
     if (serializedHighScore === null)
       return 0;
     return JSON.parse(serializedHighScore);
@@ -12,19 +12,19 @@ const getSerializesHighScore = () => {
   }
 };
 
-export const loadState = () => {
-  const highScore = getSerializesHighScore();
+export const loadInitialLocalState = () => {
+  const userHighScore = getSerializesHighScore();
   return _merge({}, DEFAULT_STATE, {
     game: {
-      highScore
+      userHighScore
     }
   });
 };
 
-export const saveState = (state) => {
+export const saveLocalState = (state) => {
   try {
-    const serializedState = JSON.stringify(state.game.highScore || 0);
-    localStorage.setItem('highScore', serializedState);
+    const serializedState = JSON.stringify(state.game.userHighScore || 0);
+    localStorage.setItem('userHighScore', serializedState);
   } catch (err) {
     return {};
   }

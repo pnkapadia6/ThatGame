@@ -1,22 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 
 import App from './components/MainApp';
 import store from './reducers';
-
-import { loadState, saveState } from './localStorage';
+import { loadInitialLocalState, saveLocalState } from './localStorage';
 
 import './index.scss';
 
-const persistedState = loadState();
+const firebaseConfig = {
+  apiKey: "AIzaSyDHrT-h5FwhGpP3vx4ysOyjUacD6zddQw0",
+  authDomain: "sample1-5ee92.firebaseapp.com",
+  databaseURL: "https://sample1-5ee92.firebaseio.com",
+  projectId: "sample1-5ee92", //
+  storageBucket: "sample1-5ee92.appspot.com",
+  messagingSenderId: "722727776852" //
+}
 
-const appStore = createStore(store, persistedState, applyMiddleware(thunk));
+const reduxFirebaseConfig = {
+  //enableLogging: true
+};
+
+const persistedState = loadInitialLocalState();
+
+// Add redux Firebase to compose
+const createStoreWithFirebase = compose(
+  reactReduxFirebase(firebaseConfig, reduxFirebaseConfig)
+)(createStore);
+
+const appStore = createStoreWithFirebase(store, persistedState, applyMiddleware(thunk.withExtraArgument(getFirebase)));
 
 appStore.subscribe(() => {
-  saveState(appStore.getState());
+  saveLocalState(appStore.getState());
 });
 
 ReactDOM.render(
