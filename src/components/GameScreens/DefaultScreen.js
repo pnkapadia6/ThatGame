@@ -11,7 +11,7 @@ const DefaultScreen = ({ userHighScore = 0, highestScore = 0, onStartGame }) => 
 
   return (
     <div className="start-container">
-      <div className="start-container__button" onClick={onStartGame}> GO</div>
+      <div className="start-container__button" onClick={onStartGame}>GO</div>
       {highScoreHtml}
       <div className="start-container__rules">
         <label className="start-container__r__label">
@@ -26,6 +26,7 @@ const DefaultScreen = ({ userHighScore = 0, highestScore = 0, onStartGame }) => 
 };
 
 DefaultScreen.propTypes = {
+  highestScore: PropTypes.number,
   userHighScore: PropTypes.number.isRequired,
   onStartGame: PropTypes.func.isRequired
 };

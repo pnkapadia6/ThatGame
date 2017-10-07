@@ -10,18 +10,22 @@ const renderGameState = (gameState) => {
 };
 
 class GameOverScreen extends PureComponent {
+  constructor(props) {
+    super();
+    this.state = {
+      isHighestScore: props.highScoreCreated && props.userHighScore > props.highestScore
+    }
+  }
+
   componentWillMount() {
     const { props } = this;
-    if (props.highScoreCreated && props.userHighScore > props.highestScore) {
-      console.log('pushing new score!!');
+    if (this.state.isHighestScore) {
       props.firebase.set('highestScore', props.userHighScore);
     }
   }
 
   render() {
     const { props } = this;
-    const { userHighScore, highScoreCreated, highestScore } = props;
-    let isHighestScore = userHighScore > highestScore;
 
     return (
       <div className="game-over-container">
@@ -30,12 +34,12 @@ class GameOverScreen extends PureComponent {
         <div className="game-over-container__score">Score: {props.score}</div>
         <div className="game-over-container__button" onClick={props.onStartGame}>Play again</div>
         <div className="game-over-container__high-score-label">
-          {highScoreCreated ? 'High Score created!!' : ''}
-          {isHighestScore ? 'You beat everyone!!' : ''}
+          {props.highScoreCreated ? 'High Score created!' : ''}
+          {this.state.isHighestScore ? ' You beat everyone!' : ''}
         </div>
         <div className="game-over-container__high-score">
-          <p>Your High Score: {userHighScore}</p>
-          <p>Highest Score: {highestScore}</p>
+          <p>Your High Score: {props.userHighScore}</p>
+          <p>Highest Score: {props.highestScore}</p>
         </div>
       </div>
     );
@@ -43,6 +47,8 @@ class GameOverScreen extends PureComponent {
 }
 
 GameOverScreen.propTypes = {
+  firebase: PropTypes.object,
+  highestScore: PropTypes.number.isRequired,
   userHighScore: PropTypes.number.isRequired,
   highScoreCreated: PropTypes.bool,
   gameState: PropTypes.string.isRequired,

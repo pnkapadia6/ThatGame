@@ -18,7 +18,7 @@ const firebaseConfig = {
   projectId: "sample1-5ee92", //
   storageBucket: "sample1-5ee92.appspot.com",
   messagingSenderId: "722727776852" //
-}
+};
 
 const reduxFirebaseConfig = {
   //enableLogging: true
@@ -26,7 +26,7 @@ const reduxFirebaseConfig = {
 
 const persistedState = loadInitialLocalState();
 
-// Add redux Firebase to compose
+// Add redux Firebase to compose app store
 const createStoreWithFirebase = compose(
   reactReduxFirebase(firebaseConfig, reduxFirebaseConfig)
 )(createStore);

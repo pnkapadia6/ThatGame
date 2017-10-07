@@ -1,6 +1,8 @@
 export const MAX_NUM = 20;
 export const MIN_NUM = 1;
-export const TIMER_OFFSET = 30;	// #seconds * 10
+export const TIMER_SEC = 3;
+export const TIMER_BASE = 10;
+export const TIMER_OFFSET = TIMER_SEC * TIMER_BASE;
 
 export const GAME_STATUS = {
   DEFAULT: 'default', // not started (menu)

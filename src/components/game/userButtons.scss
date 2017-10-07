@@ -3,21 +3,21 @@
   height: 4rem;
   text-align: center;
   width: 100%;
-}
 
-.user-buttons__btn {
-  color: beige;
-  cursor: pointer;
-  flex: 1;
-  font-size: 2rem;
-  height: 100%;
-  line-height: 4rem;
-}
+  &__btn {
+    color: beige;
+    cursor: pointer;
+    flex: 1;
+    font-size: 2rem;
+    height: 100%;
+    line-height: 4rem;
+  }
 
-.user-buttons__btn--true {
-  background-color: #24cca8;
-}
+  &__btn--true {
+    background-color: #24cca8;
+  }
 
-.user-buttons__btn--false {
-  background-color: #ff3f33;
+  &__btn--false {
+    background-color: #ff3f33;
+  }
 }

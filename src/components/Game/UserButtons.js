@@ -3,8 +3,8 @@ import './userButtons.scss';
 
 const UserButtons = ({ onTrueClick, onFalseClick }) => (
   <div className="user-buttons">
-    <div className="user-buttons__btn user-buttons__btn--true" onClick={onTrueClick}> True</div>
-    <div className="user-buttons__btn user-buttons__btn--false" onClick={onFalseClick}> False</div>
+    <div className="user-buttons__btn user-buttons__btn--true" onClick={onTrueClick}>True</div>
+    <div className="user-buttons__btn user-buttons__btn--false" onClick={onFalseClick}>False</div>
   </div>
 );
 

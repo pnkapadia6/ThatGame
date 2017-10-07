@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _keys from 'lodash/keys';
 import { MAX_NUM, MIN_NUM, OPERATORS } from '../constants';
 
 const getRandomNumber = (min = MIN_NUM, max = MAX_NUM) => {
@@ -6,16 +6,16 @@ const getRandomNumber = (min = MIN_NUM, max = MAX_NUM) => {
 };
 
 const getRandomOperator = () => {
-  const operators = _.keys(OPERATORS),
+  const operators = _keys(OPERATORS),
     operatorIndex = getRandomNumber(0, operators.length - 1);
   return OPERATORS[operators[operatorIndex]];
 };
 
 const getRandomResult = ([no1, no2], operation) => {
   const result = operation.operate(no1, no2),
-    isCorrect = getRandomNumber(0, 1);
+    isRandomResultCorrect = getRandomNumber(0, 1);
 
-  if (isCorrect) {
+  if (isRandomResultCorrect) {
     return result;
   }
   return result + getRandomNumber(-5, +5);
@@ -23,18 +23,12 @@ const getRandomResult = ([no1, no2], operation) => {
 
 export default class Equation {
   constructor() {
-    const operator = getRandomOperator(),
-      numbers = [getRandomNumber(), getRandomNumber()],
-      answer = getRandomResult(numbers, operator),
-      isCorrect = operator.operate(numbers[0], numbers[1]) === answer;
+    this.operator = getRandomOperator();
+    this.nos = [getRandomNumber(), getRandomNumber()];
+    this.answer = getRandomResult(this.nos, this.operator);
+  }
 
-    console.log(numbers, answer);
-
-    return {
-      nos: numbers,
-      operator,
-      answer,
-      isCorrect
-    }
+  isCorrect() {
+    return this.operator.operate(this.nos[0], this.nos[1]) === this.answer;
   }
 }

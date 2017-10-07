@@ -22,10 +22,15 @@ export const loadInitialLocalState = () => {
 };
 
 export const saveLocalState = (state) => {
-  try {
-    const serializedState = JSON.stringify(state.game.userHighScore || 0);
-    localStorage.setItem('userHighScore', serializedState);
-  } catch (err) {
-    return {};
+  const savedHighScore = getSerializesHighScore();
+  const newHighScore = state.game.userHighScore;
+
+  if (savedHighScore !== newHighScore) {
+    try {
+      const serializedState = JSON.stringify(newHighScore || 0);
+      localStorage.setItem('userHighScore', serializedState);
+    } catch (err) {
+      return {};
+    }
   }
 };

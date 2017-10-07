@@ -1,10 +1,11 @@
 import React, { PropTypes, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { startGame, answerCorrectly, answerIncorrectly } from '../../actions';
 import UserButtons from './UserButtons';
 import Timer from '../Timer';
+import { GAME_STATUS } from '../../constants';
+
 import './game.scss';
 
 const mapStateToProps = (state) => ({
@@ -16,20 +17,14 @@ const mapStateToProps = (state) => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { dispatch } = dispatchProps,
-    isEquationCorrect = stateProps.equation.isCorrect;
+    isEquationCorrect = stateProps.equation.isCorrect();
 
   return {
     ...ownProps,
     ...stateProps,
-    onStartGame: () => {
-      dispatch(startGame())
-    },
-    onTrueClick: () => {
-      dispatch(isEquationCorrect ? answerCorrectly() : answerIncorrectly())
-    },
-    onFalseClick: () => {
-      dispatch(!isEquationCorrect ? answerCorrectly() : answerIncorrectly())
-    }
+    onStartGame: () => dispatch(startGame()),
+    onTrueClick: () => dispatch(isEquationCorrect ? answerCorrectly() : answerIncorrectly()),
+    onFalseClick: () => dispatch(!isEquationCorrect ? answerCorrectly() : answerIncorrectly())
   }
 };
 
@@ -48,7 +43,7 @@ class Game extends PureComponent {
   }
 
   renderGameQuestion() {
-    const { equation: {nos, operator, answer} } = this.props;
+    const { equation: { nos, operator, answer } } = this.props;
     return (
       <div className="my-app__gw__equation">
         <div className="my-app__gwe__number">{nos[0]}</div>
@@ -62,8 +57,8 @@ class Game extends PureComponent {
 
   renderUserButtons() {
     const { gameStatus, onTrueClick, onFalseClick } = this.props;
-    return (gameStatus === 'ongoing') && (
-        <UserButtons onTrueClick={onTrueClick} onFalseClick={onFalseClick}/>
+    return (gameStatus === GAME_STATUS.ONGOING) && (
+        <UserButtons onTrueClick={onTrueClick} onFalseClick={onFalseClick} />
       );
   }
 
@@ -79,7 +74,11 @@ class Game extends PureComponent {
 }
 
 Game.propTypes = {
-  gameStatus: PropTypes.string.isRequired
+  gameStatus: PropTypes.string.isRequired,
+  equation: PropTypes.object.isRequired,
+  highestScore: PropTypes.number.isRequired,
+  userHighScore: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired
 };
 
 export default connect(
